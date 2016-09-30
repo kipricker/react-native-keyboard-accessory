@@ -1,8 +1,10 @@
 /**
  * Created by andrewhurst on 10/5/15.
+ * Modified by kipricker on 9/29/16.
  */
 import React, { Component, PropTypes } from 'react';
 import {
+  Animated,
   Keyboard,
   LayoutAnimation,
   View,
@@ -12,13 +14,14 @@ import {
 
 const styles = StyleSheet.create({
   container: {
+    position: 'absolute',
     left: 0,
     right: 0,
     bottom: 0,
   },
 });
 
-export default class KeyboardSpacer extends Component {
+export default class KeyboardAccessory extends Component {
   static propTypes = {
     topSpacing: PropTypes.number,
     onToggle: PropTypes.func,
@@ -53,6 +56,8 @@ export default class KeyboardSpacer extends Component {
     this._listeners = null;
     this.updateKeyboardSpace = this.updateKeyboardSpace.bind(this);
     this.resetKeyboardSpace = this.resetKeyboardSpace.bind(this);
+
+    this.animatedValue = new Animated.Value(0);
   }
 
   componentDidMount() {
@@ -67,6 +72,16 @@ export default class KeyboardSpacer extends Component {
   componentWillUpdate(props, state) {
     if (state.isKeyboardOpened !== this.state.isKeyboardOpened) {
       LayoutAnimation.configureNext(props.animationConfig);
+
+      let toValue = 0;
+      if (state.isKeyboardOpened) {
+        toValue = 100;
+      }
+
+      Animated.timing(this.animatedValue, {
+        duration: 150,
+        toValue,
+      }).start();
     }
   }
 
@@ -93,7 +108,20 @@ export default class KeyboardSpacer extends Component {
   }
 
   render() {
+    const interpolatedTransparencyAnimation = this.animatedValue.interpolate({
+      inputRange: [0, 100],
+      outputRange: [0, 1],
+    });
+
     return (
-      <View style={[styles.container, { height: this.state.keyboardSpace }, this.props.style]} />);
+      <Animated.View style={[
+          styles.container,
+          { bottom: this.state.keyboardSpace, opacity: interpolatedTransparencyAnimation },
+          this.props.style
+        ]}
+      >
+        {this.props.children}
+      </Animated.View>
+    );
   }
 }
