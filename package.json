@@ -1,14 +1,14 @@
 {
-  "name": "react-native-keyboard-spacer",
+  "name": "react-native-keyboard-accessory",
   "version": "0.3.0",
-  "description": "Plug and play react-Native keyboard spacer view.",
+  "description": "Plug and play react-Native keyboard accessory view.",
   "main": "KeyboardSpacer.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Andr3wHur5t/react-native-keyboard-spacer.git"
+    "url": "git+https://github.com/PlexChat/react-native-keyboard-accessory.git"
   },
   "keywords": [
     "react-component",
@@ -19,8 +19,4 @@
   ],
   "author": "Andrew Hurst",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/Andr3wHur5t/react-native-keyboard-spacer/issues"
-  },
-  "homepage": "https://github.com/Andr3wHur5t/react-native-keyboard-spacer#readme"
 }
